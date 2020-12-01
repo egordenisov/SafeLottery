@@ -3,8 +3,8 @@
 #include <time.h>
 
 int randZ_n (int p, int q); //generate random numbers from Z_n^*
-int has_func();//hash function to check natural log equivalence
-void share_decryption (int p_, int q_); //generate Key
+int hash_func();//hash function to check natural log equivalence
+void share_decryption (int p_, int q_, int s_i, int delta, int v, int VK_i, int c_i, int c); //generate Key
 
 //надо написать хэш-функцию hash_func
 //c_i = c^(2*DELTA*s_i) (лучше сделать это вычисление  в отдельной функции, потому что его производит игрок со своим s_i)
@@ -14,7 +14,12 @@ void share_decryption (int p_, int q_); //generate Key
 //r- случайное число в [0, A], пусть A = n
 //x, x_ параметры для нахождения e, е параметр проверки идентичности логарифмов
 //
-//
+int hash_func(int a1, int a2, int a3, int a4, int a5, int a6, int n){
+    c = (a1 + a2 + a3 + a4 + a5 + a6)%n    
+    return c
+}
+
+
 void share_decryption(int p_, int q_, int s_i, delta, v, VK_i, c_i, c )
 {
     srand(time(NULL));
