@@ -1,67 +1,56 @@
+#include "stdio.h"
+#include "stdlib.h"
+#include "math.h"
+
 //factorial
-int fact(int *l)
+unsigned long int fact(int l)
 {
     int i;
-    for (i = 1; i < *l, i++)
+    unsigned long int factorial = 1;
+    for (i = 1; i < l; i++)
     {
-        i = i*(i+1)
+        factorial = factorial * (i + 1);
     }        
-    return i
+    return factorial;
 }
-int v(int n)
-{
-    int *square;
-    int i, c;
-    int a,k = 1;
-    square = (int*)malloc(n * sizeof(int));
-    for (i = 1; i < n; i++)
-    {
-	    square[i] = i*i;
-    }
-    for (i = 1; i < n; i++)
-    {
-      while(pow(square[i],a)%(n*n) != 1)
-        for (j = 1; i < n; i++)
-        {
-         if (pow(square[i], a)%(n*n) == square[j])
-            { k = 0; break}
-         else
-            {k=1}
 
-        if (k == 1) break;    
-        a = a + 1;  
-        }
-        if (k == 0)
-        {
-            c = square[j];
-            break;
-        }  
-    }
-    return c;
-    free square
-}
 // взять секретные ключи из файла
 // написать функцию , которая находить v
 // записать в файл
 // l number of servers
 // v -square of generator in Z_n^2
-void vkey_gen(int *p_, int *q_, int *l){
+void vkey_gen(unsigned long int p_, unsigned long int q_, int t, int l)
+{
     srand(time(NULL));
-    int i;
     //define parameters
-    int n, p, q, m, v, delta;//parameters to private keys
-    p = 2*p_ + 1;
-    q = 2*q_ + 1;
+    unsigned long int n, p, q, m, v, delta;//parameters to private keys
+    p = 2 * p_ + 1;
+    q = 2 * q_ + 1;
     n = p * q;
     delta = fact(l);
     //define verification key
-    int *VK;
-    VK = (int*)malloc(l * sizeof(int));
-    for (i = 1; i<l; i++)
+
+    FILE* file_vkeys = NULL;
+    file_vkeys = fopen ("VKEYS.txt", "w+");
+    if (file_vkeys == NULL) printf ("Error of create/open vkeys file");
+
+    FILE* file_skeys = NULL;
+    file_skeys = fopen ("SKEYS.txt", "r");
+    if (file_skeys == NULL) printf ("Error of open skeys file");
+
+    FILE* params = NULL;
+    params = fopen ("PARAMS.txt", "r");
+    if (params == NULL) printf ("Error of open param file");
+    unsigned long int p_, q_, v;
+    fscanf (params, "%lu %lu %lu", &p_, &q_, &v);
+
+
+    int i;
+    unsigned long int sk = 0;
+    for (i = 0; i < l; i++)
     {
-        VK[i] = pow(v,delta*SK[i]);
+        fscanf (file_skeys, "%lu", &sk);
+        fprintf (file_vkeys, "%lu\n", (pow(v, delta * sk) % (n * n))
     }
-   free VK;
-   
-    
+    fclose(file_vkeys);
 }
