@@ -1,27 +1,8 @@
 //l -- number of servers;t -- number of users   for decryption
-//дописать функцию суммы
-#include "stdio.h"
-#include "stdlib.h"
-#include "math.h"
-#include "time.h"
 
-unsigned long int f_(int i, unsigned long int *a, int t)
-{
-    
-    int k;
-    unsigned long int c = 0;
-    for (k = 0; k < t+1; k++)
-    {
-        c += a[k] * pow(i, k);
-
-    }    
-    return c;
-}
-
-// хочу записать результат в вектор
 void skey_gen(unsigned long int p_, unsigned long int q_, int t, int l)
 {
-    srand(time(NULL));
+    //srand(time(NULL));
     //define parameters
     unsigned long int n = 0, p = 0, q = 0, m = 0, beta = 0;//parameters to Shamir
     p = 2 * p_ + 1;
@@ -30,7 +11,7 @@ void skey_gen(unsigned long int p_, unsigned long int q_, int t, int l)
     n = p * q;
     //define beta from Z_n^*
     beta = rand() % n;
-    while ((beta == p)||(beta == q))
+    while (Nod(beta, n) != 1)
     {
         beta = rand() % n;
     }
@@ -49,14 +30,33 @@ void skey_gen(unsigned long int p_, unsigned long int q_, int t, int l)
     }
     //define skey_i
 
+    FILE* params = NULL;
+    params = fopen ("PARAMS.txt", "a");
+    if (params == NULL)
+    {
+        printf ("ERROR. File 'PARAMS.txt' was not found. File skey_gen.c\n\n");
+        return;
+    }
+    fprintf (params, " %lu", beta);
+    fclose(params);
+
+
+
+
+
     FILE* file_skey = NULL;
     file_skey = fopen ("SKEYS.txt", "w+");
-    if (file_skey == NULL) printf ("Error of file"); 
+    if (file_skey == NULL)
+    {
+        printf ("\nERROR. Cannot open/create 'SKEYS.txt'. File skey_gen.c\n\n");
+        return;
+    }
 
     for (i = 0; i < l; i++)
     {
         fprintf(file_skey, "%lu\n", f_(i, a, t) % (n * m));
     }
+    printf ("\nSTATUS: OK. Secret keys was generated. File skey_gen.c\n\n");
 
     fclose (file_skey);
     free (a);
