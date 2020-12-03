@@ -122,3 +122,20 @@ main_datatype intdiv (main_datatype a, main_datatype b, main_datatype n) // a / 
 
     return (((a + i * (n * n)) / b) % (n * n));
 }
+
+main_datatype intdiv_n (main_datatype a, main_datatype b, main_datatype n) // a / b
+{
+    main_datatype i = 0;
+    while (((a + i * (n)) % b) != 0)
+    {
+        i++;
+    }
+
+    return (((a + i * (n)) / b) % (n));
+}
+
+main_datatype intabs (main_datatype a, main_datatype b)
+{
+    if (a >=b ) return (a - b);
+    else        return (b - a);
+}
