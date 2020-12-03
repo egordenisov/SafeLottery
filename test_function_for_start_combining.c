@@ -3,7 +3,7 @@
 
 int main()
 {
-    printf ("Lottery result = %llu", combining(2, 4));
+    printf ("Lottery result = %llu", combining(4, 6));
 
     return 0;
 }

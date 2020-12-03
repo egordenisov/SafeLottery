@@ -82,12 +82,12 @@ main_datatype combining(int t, int l)
 	main_datatype mu_0j = 1;
 	main_datatype MULT  = 1;
 
-	for (j = 1; j <= (t+1); j++)
+	for (j = 2; j <= (t+2); j++)
     {
         mu_0j = delta;
 
 
-        for (j_ = 1; j_ <= (t+1); j_++)
+        for (j_ = 2; j_ <= (t+2); j_++)
         {
             if (j_ != j) mu_0j = mu_0j * ( j_ ) / (intabs(j_, j));
         }
