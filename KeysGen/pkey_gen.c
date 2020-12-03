@@ -1,7 +1,7 @@
 //generate Key
 void pkey_gen(unsigned long int p_, unsigned long int q_, int t, int l)
 {
-    //srand(time(NULL));
+    srand(time(NULL));
 
     //define parameters to private keys
     unsigned long int n = 0;

@@ -5,7 +5,7 @@
 // v -square of generator in Z_n^2
 void vkey_gen(unsigned long int p_, unsigned long int q_, int t, int l)
 {
-    //srand(time(NULL));
+    srand(time(NULL));
     //define parameters
     unsigned long int n, p, q, m, v, delta;//parameters to private keys
     p = 2 * p_ + 1;

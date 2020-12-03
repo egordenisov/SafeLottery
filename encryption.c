@@ -1,49 +1,61 @@
 #include <stdlib.h>
+#include "stdio.h"
 #include <math.h>
 #include <time.h>
+#include "KeysGen/functions.c"
 
-int randZ_n (int p, int q); //generate random numbers from Z_n^*
-void encryption(int g, int q_, int p_, int M);//encryption
-
-int randZ_n (int p, int q)
-{
-    int output = 0;
-    output = rand () % (p * q);
-    while ((output == p) || (output == q))
-    {
-        output = rand () % (p * q);
-    }        
-    return output;
-}
 //g = PK[0], first parameter from public key
 //M -message which we want encrypt
-//q_ p_ to count n 
+//q_ p_ to count n
 //c - encrypted message
-void encryption(int g, int q_, int p_, int M)
+main_datatype encryption(main_datatype M)
 {
-    srand(time(NULL));
 
     //define parameters to private keys
-    int n = 0;
-    int p = 0, q = 0;
-    int x = 0, c = 0;
-	double d;
+   // main_datatype M = 0;
+
+   // printf ("Write number for take part in lottery\n\n----  ");
+  //  scanf ("%llu", &M);
+
+
+    FILE* file_pkeys = NULL;
+    file_pkeys = fopen ("KeysGen/PKEYS.txt", "r");
+    if (file_pkeys == NULL)
+    {
+        printf ("\nERROR. Cannot open PKEYS file. File encryption.c\n\n");
+        return;
+    }
+
+    main_datatype g = 0;
+    fscanf (file_pkeys, "%llu", &g);
+    fclose (file_pkeys);
+
+    FILE* params = NULL;
+    params = fopen ("KeysGen/PARAMS.txt", "r");
+    if (params == NULL)
+    {
+        printf ("\nERROR. Cannot open PARAMS file. File encryption.c\n\n");
+        return;
+    }
+
+	main_datatype p_ = 0, q_ = 0;
+    fscanf (params, "%llu %llu", &p_, &q_);
+    fclose (params);
+
+    main_datatype n = 0;
+    main_datatype p = 0, q = 0;
+    main_datatype x = 0, c = 0;
+
     p = 2 * p_ + 1;
     q = 2 * q_ + 1;
     n = p * q;
 
+
     //define x from Z_n^*
     x = randZ_n(p, q);
-    
-    //encrypt message
-    //
-    d = (pow(g, M) * pow(x, n));
-	c = (int)d;    
-    c = c % (n*n);
-    
-}
 
-int main ()
-{
-    return 0;
+    //encrypt message
+    c = (intpower(g, M, n) * intpower(x, n, n)) % (n * n);
+
+    return c;
 }

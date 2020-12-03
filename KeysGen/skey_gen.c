@@ -2,7 +2,7 @@
 
 void skey_gen(unsigned long int p_, unsigned long int q_, int t, int l)
 {
-    //srand(time(NULL));
+    srand(time(NULL));
     //define parameters
     unsigned long int n = 0, p = 0, q = 0, m = 0, beta = 0;//parameters to Shamir
     p = 2 * p_ + 1;
